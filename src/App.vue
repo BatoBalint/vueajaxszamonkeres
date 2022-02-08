@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <div class="row mt-5">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-10 mx-auto">
           <table class="table table-dark table-striped">
             <tr>
               <th>Name</th>
@@ -67,9 +67,9 @@ export default {
         if (error.length != 0) error += '\r\n';
         error += 'Height can not be greater than 250';
       }
-      if (this.inputPrice < 0 || this.inputPrice === '') {
+      if (this.inputPrice < 1000 || this.inputPrice === '') {
         if (error.length != 0) error += "\r\n";
-        error += 'The price can\'t be negative';
+        error += 'The price must be at least 1000';
       }
       if (error.length > 0) {
         alert(error);
@@ -91,12 +91,15 @@ export default {
       let data = myPromise.json();
       console.log(data);
       this.loadData();
+      this.clearAddInputs();
+    },
+    cancelAddStatueBtnClicked() {
+      this.clearAddInputs();
+    },
+    clearAddInputs() {
       this.inputName = '';
       this.inputHeight = '';
       this.inputPrice = '';
-    },
-    cancelAddStatueBtnClicked() {
-
     }
   },
   mounted() {
