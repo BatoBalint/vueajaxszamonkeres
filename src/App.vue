@@ -1,16 +1,28 @@
 <template>
   <div id="app">
-    
+    <table>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+      </tr>
+      <TableLine v-for="s in statues" :key="s.id" :statue="s"/>
+    </table>
   </div>
 </template>
 
 <script>
+import TableLine from './components/tableLine.vue'
 
 export default {
   name: 'App',
+  components: {
+    TableLine
+  },
   data: function() {
     return {
-      statues: {}
+      statues: {},
     }
   },
   mounted() {
