@@ -1,6 +1,6 @@
 <template>
     <tr id="TableLine">
-        <td v-if="!editMode" class="py-2">{{ statue.person }}</td>
+        <td v-if="!editMode">{{ statue.person }}</td>
         <td v-if="!editMode">{{ statue.height }}</td>
         <td v-if="!editMode">{{ statue.price }}</td>
         <td v-if="editMode"><input class="form-control bg-dark text-white" type="text" placeholder="Statue name" v-model="inputName"></td>
@@ -109,7 +109,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

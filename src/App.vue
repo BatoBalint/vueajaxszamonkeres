@@ -3,23 +3,27 @@
     <div class="container">
       <div class="row mt-5">
         <div class="col-md-10 mx-auto">
-          <table class="table table-dark table-striped">
-            <tr>
-              <th>Name</th>
-              <th>Height</th>
-              <th>Price</th>
-            </tr>
-            <TableLine v-for="s in statues" :key="s.id" :statue="s"
-            @refreshTable="loadData" />
-            <tr>
-              <td><input class="form-control bg-dark text-white" type="text" placeholder="Statue name" v-model="inputName"></td>
-              <td><input class="form-control bg-dark text-white" type="number" placeholder="Statue Height" v-model="inputHeight"></td>
-              <td><input class="form-control bg-dark text-white" type="number" placeholder="Statue price" v-model="inputPrice"></td>
-              <td class="text-end">
-                <button class="btn btn-outline-success mx-1" @click="addStatueBtnClicked">Save</button>
-                <button class="btn btn-outline-danger mx-1" @click="cancelAddStatueBtnClicked">Cancel</button>
-              </td>
-            </tr>
+          <table class="table table-dark table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Height</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <TableLine v-for="s in statues" :key="s.id" :statue="s"
+              @refreshTable="loadData" />
+              <tr>
+                <td><input class="form-control bg-dark text-white" type="text" placeholder="Statue name" v-model="inputName"></td>
+                <td><input class="form-control bg-dark text-white" type="number" placeholder="Statue height" v-model="inputHeight"></td>
+                <td><input class="form-control bg-dark text-white" type="number" placeholder="Statue price" v-model="inputPrice"></td>
+                <td class="text-end">
+                  <button class="btn btn-outline-success mx-1" @click="addStatueBtnClicked">Save</button>
+                  <button class="btn btn-outline-danger mx-1" @click="cancelAddStatueBtnClicked">Clear</button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
@@ -104,7 +108,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
