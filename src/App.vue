@@ -8,6 +8,16 @@
 
 export default {
   name: 'App',
+  data: function() {
+    return {
+      statues: {}
+    }
+  },
+  mounted() {
+    fetch('http://localhost:8000/api/statues')
+    .then(response => response.json())
+    .then(data => this.statues = data);
+  }
 }
 </script>
 
