@@ -10,8 +10,7 @@
               <th>Price</th>
             </tr>
             <TableLine v-for="s in statues" :key="s.id" :statue="s"
-            @deleteBtnClicked="loadData" 
-            @editBtnClicked="loadData"/>
+            @refreshTable="loadData" />
             <tr>
               <td><input class="form-control bg-dark text-white" type="text" placeholder="Statue name" v-model="inputName"></td>
               <td><input class="form-control bg-dark text-white" type="number" placeholder="Statue Height" v-model="inputHeight"></td>
@@ -80,7 +79,7 @@ export default {
         height: this.inputHeight,
         price: this.inputPrice
       }
-      let myPromise = await fetch('http://localhost:8000/api/statues', {
+      await fetch('http://localhost:8000/api/statues', {
         method: 'POST',
         body: JSON.stringify(newStatue),
         headers: {
@@ -88,8 +87,6 @@ export default {
           'Accept': 'application/json'
         }
       });
-      let data = myPromise.json();
-      console.log(data);
       this.loadData();
       this.clearAddInputs();
     },

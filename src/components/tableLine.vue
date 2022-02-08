@@ -7,7 +7,7 @@
         <td v-if="editMode"><input class="form-control bg-dark text-white" type="number" placeholder="Statue Height" v-model="inputHeight"></td>
         <td v-if="editMode"><input class="form-control bg-dark text-white" type="number" placeholder="Statue price" v-model="inputPrice"></td>
         <td class="text-end">
-            <button :class="editBtnColor" class="btn mx-1" @click="editBtnClicked()">{{ editBtnText }}</button>
+            <button :class="editBtnColor" class="btn mx-1" @click="editBtnClicked(statue.id)">{{ editBtnText }}</button>
             <button class="btn btn-outline-danger px-3 bold mx-1" @click="deleteBtnClicked(statue.id)">{{ deleteBtnText }}</button>
         </td>
     </tr>
@@ -30,7 +30,7 @@ export default {
     }
   },
   methods: {
-      editBtnClicked() {
+      async editBtnClicked(statueid) {
         if (!this.editMode) {
             this.editMode = !this.editMode;
             this.deleteBtnText = 'Cancel';
@@ -61,20 +61,41 @@ export default {
                 alert(error);
                 return;
             }
+
+            let newStatue = {
+                person: this.inputName.trim(),
+                height: this.inputHeight,
+                price: this.inputPrice
+            }
+            await fetch('http://localhost:8000/api/statues/' + statueid, {
+                method: 'PATCH',
+                body: JSON.stringify(newStatue),
+                headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+                }
+            });
+            await this.$emit('refreshTable');
+            this.defaultEditMode();
+            this.setInputValues();
+
         }
+      },
+      defaultEditMode() {
+          this.editMode = !this.editMode;
+          this.deleteBtnText = 'X';
+          this.editBtnText = 'Edit';
+          this.editBtnColor = 'btn-outline-warning';
+          this.setInputValues();
       },
       async deleteBtnClicked(statueid) {
         if (this.editMode) {
-            this.editMode = !this.editMode;
-            this.deleteBtnText = 'X';
-            this.editBtnText = 'Edit';
-            this.editBtnColor = 'btn-outline-warning';
-            this.setInputValues();
+            this.defaultEditMode();
         } else {
             await fetch('http://localhost:8000/api/statues/' + statueid, {
             method: "DELETE"
             });
-            this.$emit('deleteBtnClicked');
+            this.$emit('refreshTable');
         }
       },
       setInputValues() {
